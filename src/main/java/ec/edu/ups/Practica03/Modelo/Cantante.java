@@ -4,6 +4,7 @@
  */
 package ec.edu.ups.practica03.Modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +12,7 @@ import java.util.Objects;
  *
  * @author Juan Fernandez
  */
-public class Cantante extends Persona {
-
+public class Cantante extends Persona{
     private String nombreArtistico;
     private String generoMusical;
     private int numeroDeSencillos;
@@ -20,31 +20,34 @@ public class Cantante extends Persona {
     private int numeroDeGiras;
     private List<Disco> discografia;
 
-    public Cantante() {//constructor vacio
-    }
-
-    public Cantante(String nombreArtistico, String generoMusical, int numeroDeSencillos, int numeroDeConciertos, int numeroDeGiras, List<Disco> discografia, int codigo, String nombre, String apellido, int edad, String nacionalidad, double salario) {
-        super(codigo, nombre, apellido, edad, nacionalidad, salario);//constructor con los parametros de la clase Cantante
+    public Cantante(String nombreArtistico, String generoMusical, int numeroDeSencillos, 
+            int numeroDeConciertos, int numeroDeGiras, int codigo, 
+            String nombre, String apellido, int edad, String nacionalidad, double salario) {
+        
+        super(codigo, nombre, apellido, edad, nacionalidad, salario);
         this.nombreArtistico = nombreArtistico;
         this.generoMusical = generoMusical;
         this.numeroDeSencillos = numeroDeSencillos;
         this.numeroDeConciertos = numeroDeConciertos;
         this.numeroDeGiras = numeroDeGiras;
-        this.discografia = discografia;
+        this.discografia = new ArrayList<>();
     }
 
-    public Cantante(String nombreArtistico, String generoMusical, int numeroDeSencillos, int numeroDeConciertos, int numeroDeGiras, int codigo, String nombre, String apellido, int edad, String nacionalidad, double salario) {
-        super(codigo, nombre, apellido, edad, nacionalidad, salario);//constructor con 5 parametros de la clase Cantante
-        this.nombreArtistico = nombreArtistico;
-        this.generoMusical = generoMusical;
-        this.numeroDeSencillos = numeroDeSencillos;
-        this.numeroDeConciertos = numeroDeConciertos;
-        this.numeroDeGiras = numeroDeGiras;
-    }
-  //metodos de encapsulamiento get y set 
-    
-    public Cantante(List<Disco> discografia) {
-        this.discografia = discografia;
+    public double calcularSalario(){
+        double s=getSalario();
+        if(numeroDeSencillos>10 && numeroDeGiras>3){
+            s+=1000;
+        }
+        if(discografia.size()>4){
+            s+=2000;
+        }
+        if(numeroDeSencillos>0 && numeroDeGiras<11){
+            s*=1.05;
+        }
+        if(numeroDeGiras>0 && numeroDeGiras<4){
+            s*=1.03;
+        }
+        return s;
     }
 
     public String getNombreArtistico() {
@@ -94,20 +97,33 @@ public class Cantante extends Persona {
     public void setDiscografia(List<Disco> discografia) {
         this.discografia = discografia;
     }
+    
+    public void agregarDisco(int codigo, String nombre, int anioDeLanza) {
+        Disco disco = new Disco(codigo, nombre, anioDeLanza);
+        this.discografia.add(disco);//Se agrega los discos  a la lista discografia
+    }
 
     @Override
-    public int hashCode() {//Retorna el valor del hashcode
+    public String toString() {
+        return "Cantante:"+super.toString()+ "\nNombre Artistico: " + nombreArtistico + "\nGenero Musical: " + generoMusical 
+                + "\n Numero de Sencillos: " + numeroDeSencillos + "\n Numero de Conciertos: " + numeroDeConciertos 
+                + "\n Numero de Giras: " + numeroDeGiras + "\n Discografia: \n" + discografia + "\nSalario: "+calcularSalario()+"\n";
+    }
+
+    @Override
+    public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.nombreArtistico);
+        hash = 79 * hash + Objects.hashCode(this.nombreArtistico);
+        hash = 79 * hash + Objects.hashCode(this.generoMusical);
+        hash = 79 * hash + this.numeroDeSencillos;
+        hash = 79 * hash + this.numeroDeConciertos;
+        hash = 79 * hash + this.numeroDeGiras;
+        hash = 79 * hash + Objects.hashCode(this.discografia);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-    /*
-    *Compara si la instancia actual de la clase Cantante es igual a otro objeto.
-    *retorna  true si la instancia actual de esta clase Cantante es igual al objeto pasado como parametro
-     */
         if (this == obj) {
             return true;
         }
@@ -118,44 +134,24 @@ public class Cantante extends Persona {
             return false;
         }
         final Cantante other = (Cantante) obj;
-        return Objects.equals(this.nombreArtistico, other.nombreArtistico);
+        if (this.numeroDeSencillos != other.numeroDeSencillos) {
+            return false;
+        }
+        if (this.numeroDeConciertos != other.numeroDeConciertos) {
+            return false;
+        }
+        if (this.numeroDeGiras != other.numeroDeGiras) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreArtistico, other.nombreArtistico)) {
+            return false;
+        }
+        if (!Objects.equals(this.generoMusical, other.generoMusical)) {
+            return false;
+        }
+        return Objects.equals(this.discografia, other.discografia);
     }
-
     
-
-    @Override
-    public String toString() {//Metodo toString que devuelve de forma de string los atributos
-        return "Cantante{" + "nombreArtistico=" + nombreArtistico
-                + ", generoMusical=" + generoMusical + ", numeroDeSencillos=" + numeroDeSencillos
-                + ", numeroDeConciertos=" + numeroDeConciertos + ", numeroDeGiras=" + numeroDeGiras
-                + ", discografia=" + discografia + '}';
-    }
-
-
-
-    public void agregarDisco(int codigo, String nombre, int anioDeLanza) {
-
-        Disco disco = new Disco(codigo, nombre, anioDeLanza);
-        this.discografia.add(disco);//Se agrega los discos  a la lista discografia
-    }
-
-    @Override
-    public double calcularSalario() {
-        double salarioBase = 1000.0;
-        if (numeroDeSencillos > 10 && numeroDeGiras > 3) {
-            salarioBase += 1000.0;
-        } else if (numeroDeSencillos >= 1 && numeroDeSencillos <= 10) {
-            salarioBase += salarioBase * 0.05;
-        }
-
-        if (numeroDeGiras >= 1 && numeroDeGiras <= 3) {
-            salarioBase += salarioBase * 0.03;
-        }
-
-        if (discografia.size() >= 5) {
-            salarioBase += 2000.0;
-        }
-        return salarioBase;
-    }
-
+    
+    
 }

@@ -10,26 +10,28 @@ package ec.edu.ups.practica03.Modelo;
  */
 public abstract class Persona {
 
-    private int codigo;
+  private int codigo;
     private String nombre;
     private String apellido;
     private int edad;
     private String nacionalidad;
     private double salario;
 
-    public Persona() {
-    }//constructor vacio
-
-    public Persona(int codigo, String nombre, String apellido, int edad, String nacionalidad, double salario) {//constructor con parametros
-        this.codigo = codigo;//constructor con los parametros de la clase Persona
+    public Persona(int codigo, String nombre, String apellido, int edad, String nacionalidad, double salario) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.nacionalidad = nacionalidad;
         this.salario = salario;
     }
+    
+    
+    
+    public double calcularSalario(){
+        return 0.0;
+    }
 
-    //metodos de encapsulamiento get y set 
     public int getCodigo() {
         return codigo;
     }
@@ -66,8 +68,8 @@ public abstract class Persona {
         return nacionalidad;
     }
 
-    public void setNacionalidad(String Nacionalidad) {
-        this.nacionalidad = Nacionalidad;
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
     }
 
     public double getSalario() {
@@ -78,38 +80,9 @@ public abstract class Persona {
         this.salario = salario;
     }
 
-    public abstract double calcularSalario();
-
-    @Override//Retorna el valor del hashcode
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + this.codigo;
-        return hash;
-    }
-
     @Override
-    public boolean equals(Object obj) {
-        /*
-    *Compara si la instancia actual de la clase Cantante es igual a otro objeto.
-    *retorna  true si la instancia actual de esta clase Cantante es igual al objeto pasado como parametro
-         */
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Persona other = (Persona) obj;
-        return this.codigo == other.codigo;
-    }
-
-    @Override
-    public String toString() {//Metodo toString que devuelve de forma de string los atributos
-        return "Persona{" + "codigo=" + codigo + ", nombre=" + nombre
-                + ", apellido=" + apellido + ", edad=" + edad + ", Nacionalidad="
-                + nacionalidad + ", salario=" + salario + '}';
+    public String toString() {
+        return "\nCodigo: " + codigo + "\nNombre: " + nombre + "\nApellido: " + apellido 
+                + "\nEdad: " + edad + "\nNacionalidad: " + nacionalidad + '\n';
     }
 }

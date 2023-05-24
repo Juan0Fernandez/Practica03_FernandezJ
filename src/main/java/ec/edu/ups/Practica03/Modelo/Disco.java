@@ -12,20 +12,16 @@ import java.util.Objects;
  */
 public class Disco {
     
-    private int codigo;
+     private int codigo;
     private String nombre;
-    private int anioDeLanza;
+    private int anioDeLanzamiento;
 
-    public Disco() {//constructor vacio
-    }
-
-    public Disco(int codigo, String nombre, int anioDeLanza) {
-        this.codigo = codigo;//constructor con los parametros de la clase Disco
+    public Disco(int codigo, String nombre, int anioDeLanzamiento) {
+        this.codigo = codigo;
         this.nombre = nombre;
-        this.anioDeLanza = anioDeLanza;
+        this.anioDeLanzamiento = anioDeLanzamiento;
     }
-  //metodos de encapsulamiento get y set 
-    
+
     public int getCodigo() {
         return codigo;
     }
@@ -42,29 +38,22 @@ public class Disco {
         this.nombre = nombre;
     }
 
-    public int getAnioDeLanza() {
-        return anioDeLanza;
+    public int getAnioDeLanzamiento() {
+        return anioDeLanzamiento;
     }
 
-    public void setAnioDeLanza(int anioDeLanza) {
-        this.anioDeLanza = anioDeLanza;
+    public void setAnioDeLanzamiento(int anioDeLanzamiento) {
+        this.anioDeLanzamiento = anioDeLanzamiento;
     }
 
     @Override
-    public int hashCode() {//Retorna el valor del hashcode
-        int hash = 3;
-        hash = 29 * hash + this.codigo;
-        hash = 29 * hash + Objects.hashCode(this.nombre);
-        hash = 29 * hash + this.anioDeLanza;
+    public int hashCode() {
+        int hash = 7;
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        /*
-    *Compara si la instancia actual de la clase Cantante es igual a otro objeto.
-    *retorna  true si la instancia actual de esta clase Cantante es igual al objeto pasado como parametro
-     */
         if (this == obj) {
             return true;
         }
@@ -78,7 +67,7 @@ public class Disco {
         if (this.codigo != other.codigo) {
             return false;
         }
-        if (this.anioDeLanza != other.anioDeLanza) {
+        if (this.anioDeLanzamiento != other.anioDeLanzamiento) {
             return false;
         }
         return Objects.equals(this.nombre, other.nombre);
@@ -86,8 +75,9 @@ public class Disco {
 
     @Override
     public String toString() {
-        return "Disco{" + "codigo=" + codigo + ", nombre=" + nombre + ", anioDeLanza=" + anioDeLanza + '}';
+        return "\tDisco: \n\tCodigo: " + codigo + "\n\tNombre: " + nombre + "\n\tAnio de Lanzamiento: " + anioDeLanzamiento + '\n';
     }
+    
     
     
     

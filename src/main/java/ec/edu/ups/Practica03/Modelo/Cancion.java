@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.practica03.Modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Juan Fernandez
@@ -12,16 +14,13 @@ public class Cancion {
     private int codigo;
     private String titulo;
     private String letra;
-    private double tiempoEnMinu;
+    private double tiempoEnMinutos;
 
-    public Cancion() {//constructor vacio
-    }
-
-    public Cancion(int codigo, String titulo, String letra, double tiempoEnMinu) {//constructor con los parametros de la clase Cancion
+    public Cancion(int codigo, String titulo, String letra, double tiempoEnMinutos) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.letra = letra;
-        this.tiempoEnMinu = tiempoEnMinu;
+        this.tiempoEnMinutos = tiempoEnMinutos;
     }
 
     public int getCodigo() {
@@ -48,27 +47,26 @@ public class Cancion {
         this.letra = letra;
     }
 
-    public double getTiempoEnMinu() {
-        return tiempoEnMinu;
+    public double getTiempoEnMinutos() {
+        return tiempoEnMinutos;
     }
 
-    public void setTiempoEnMinu(double tiempoEnMinu) {
-        this.tiempoEnMinu = tiempoEnMinu;
+    public void setTiempoEnMinutos(double tiempoEnMinutos) {
+        this.tiempoEnMinutos = tiempoEnMinutos;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + this.codigo;
+        int hash = 5;
+        hash = 53 * hash + this.codigo;
+        hash = 53 * hash + Objects.hashCode(this.titulo);
+        hash = 53 * hash + Objects.hashCode(this.letra);
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.tiempoEnMinutos) ^ (Double.doubleToLongBits(this.tiempoEnMinutos) >>> 32));
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        /*
-    *Compara si la instancia actual de la clase Cantante es igual a otro objeto.
-    *retorna  true si la instancia actual de esta clase Cantante es igual al objeto pasado como parametro
-     */
         if (this == obj) {
             return true;
         }
@@ -79,20 +77,22 @@ public class Cancion {
             return false;
         }
         final Cancion other = (Cancion) obj;
-        return true;
+        if (this.codigo != other.codigo) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.tiempoEnMinutos) != Double.doubleToLongBits(other.tiempoEnMinutos)) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        return Objects.equals(this.letra, other.letra);
     }
 
-      
- //Metodo toString que devuelve de forma de string los atributos
     @Override
     public String toString() {
-        return "Cancion{" + "codigo=" + codigo + ", titulo=" + titulo +
-                ", letra=" + letra + ", tiempoEnMinu=" + tiempoEnMinu + '}';
+        return "\n\tCancion:\n\tCodigo: " + codigo + "\n\tTitulo: " + titulo + "\n\tLetra: " + letra + "\n\tTiempo en Minutos: " + tiempoEnMinutos + '\n';
     }
-    
-    
-   
-    
     
     
 } 
